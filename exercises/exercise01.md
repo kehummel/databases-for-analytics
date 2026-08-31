@@ -1,6 +1,6 @@
 # Exercise 01: World Database SQL Practice
 
-- Name:
+- Name: Kim Hummel
 - Course: Database for Analytics
 - Module: 1
 - Database Used: World Database
@@ -35,7 +35,9 @@ Why were these data types selected?
 
 ### Answer
 
-_Write your explanation here._
+They were selected because they are both numerical data sets so you want the data type to be numerical.
+Population is an integer because you cannot have a decimal of a person, you can only have a full person so your answer must be an integer.
+Life Expectancy is a decimal because time is not capture in full years only. You can live part of a year which is why its data type is a decimal.
 
 ### Screenshot
 
@@ -45,7 +47,7 @@ _Show the table structure or DESCRIBE output._
 DESCRIBE country;
 ```
 
-![Q1 Screenshot](screenshots/q1_datatypes.png)
+![Q1 Screenshot](screenshots/E1_Q1.png)
 
 ---
 
@@ -56,7 +58,7 @@ Why do you think this data type was selected?
 
 ### Answer
 
-_Write your explanation here._
+The data type of Indep.Year is smallint, which contains integers between -32,768 and 32,767. This was selected most likely because a smallint requires less storage space, and we know that the values will not be above the current year, so they will not be above 2026.
 
 ### Screenshot
 
@@ -64,7 +66,7 @@ _Write your explanation here._
 DESCRIBE country;
 ```
 
-![Q2 Screenshot](screenshots/q2_indepyear.png)
+![Q2 Screenshot](screenshots/E1_Q1.png)
 
 ---
 
@@ -75,7 +77,7 @@ Explain why your proposed data type might be better in some situations.
 
 ### Answer
 
-_Write your explanation here._
+You could use the YEAR data type for IndepYear.
 
 ---
 
@@ -93,7 +95,7 @@ ORDER BY Name;
 
 ### Screenshot
 
-![Q4 Screenshot](screenshots/q4_cities_sorted.png)
+![Q4 Screenshot](screenshots/E1_Q4.png)
 
 ---
 
@@ -113,7 +115,7 @@ ORDER BY GovernmentForm;
 
 ### Screenshot
 
-![Q5 Screenshot](screenshots/q5_government_forms.png)
+![Q5 Screenshot](screenshots/E1_Q5.png)
 
 ---
 
@@ -131,7 +133,7 @@ WHERE Continent = 'Oceania';
 
 ### Screenshot
 
-![Q6 Screenshot](screenshots/q6_oceania.png)
+![Q6 Screenshot](screenshots/E1_Q6.png)
 
 ---
 
@@ -148,7 +150,7 @@ FROM city;
 
 ### Screenshot
 
-![Q7 Screenshot](screenshots/q7_city_countrycode.png)
+![Q7 Screenshot](screenshots/E1_Q7.png)
 
 ---
 
@@ -166,7 +168,7 @@ WHERE Name = 'Nashville-Davidson';
 
 ### Screenshot
 
-![Q8 Screenshot](screenshots/q8_update_city.png)
+![Q8 Screenshot](screenshots/E1_Q8.png)
 
 ---
 
@@ -185,7 +187,7 @@ VALUES ('NAR', 'Narnia', 'Europe', 'Fantasy', 1000000);
 
 ### Screenshot
 
-![Q9 Screenshot](screenshots/q9_insert_narnia.png)
+![Q9 Screenshot](screenshots/E1_Q9.png)
 
 ---
 
@@ -202,4 +204,4 @@ WHERE Code = 'NAR';
 
 ### Screenshot
 
-![Q10 Screenshot](screenshots/q10_delete_narnia.png)
+![Q10 Screenshot](screenshots/E1_Q10.png)
