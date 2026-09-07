@@ -145,7 +145,7 @@ FROM country)
 
 ### Screenshot
 
-![Q6 Screenshot](E2_Q6.png)
+![Q6 Screenshot](screenshots/E2_Q6.png)
 
 ---
 
@@ -191,7 +191,7 @@ ORDER BY countrylanguage.Language
 
 ### Screenshot
 
-![Q8 Screenshot](E2_Q8.png)
+![Q8 Screenshot](screenshots/E2_Q8.png)
 
 ---
 
@@ -239,7 +239,7 @@ WHERE TRIM(district) LIKE '_';
 
 ### Screenshot
 
-![Q10 Screenshot](screenshots/q10_missing_districts.png)
+![Q10 Screenshot](screenshots/E2_Q10.png)
 
 ---
 
