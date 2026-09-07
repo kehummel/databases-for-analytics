@@ -1,6 +1,6 @@
 # Exercise 02: World Database – Joins, Grouping, and Data Quality
 
-- Name:
+- Name: Kim Hummel
 - Course: Database for Analytics
 - Module: 2
 - Database Used: World Database (PostgreSQL)
@@ -24,17 +24,17 @@ When importing records from `worldPGSQL.sql`, **how many cities were imported**?
 
 ### Answer
 
-_Write the number of cities imported._
+There are 4,079 cities.
 
 ### Screenshot
 
 _Show evidence of how you determined this (for example, a COUNT query)._
 
 ```sql
--- Your SQL here
+SELECT COUNT(*) FROM city;
 ```
 
-![Q1 Screenshot](screenshots/q1_city_count.png)
+![Q1 Screenshot](screenshots/E2_Q1.png)
 
 ---
 
@@ -47,12 +47,15 @@ along with the **name of each language spoken in that country**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT country.name, countrylanguage.language
+FROM country, countrylanguage
+WHERE country.code = countrylanguage.countrycode
+ORDER BY country.name
 ```
 
 ### Screenshot
 
-![Q2 Screenshot](screenshots/q2_country_languages.png)
+![Q2 Screenshot](screenshots/E2_Q2.png)
 
 ---
 
@@ -65,12 +68,16 @@ of each **official language spoken in that country**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT country.name, countrylanguage.language AS official_language
+FROM country
+INNER JOIN countrylanguage ON country.code = countrylanguage.countrycode
+WHERE countrylanguage.IsOfficial = 'T'
+ORDER BY country.name
 ```
 
 ### Screenshot
 
-![Q3 Screenshot](screenshots/q3_official_languages.png)
+![Q3 Screenshot](screenshots/E2_Q3.png)
 
 ---
 
@@ -96,7 +103,7 @@ ON country.code = countrylanguage.countrycode;
 
 ### Answer
 
-_Write your explanation here._
+The second query returns data that is in the country table that does not have any corresponding data in the countrylanguage table. When you run the queries you find that the left out join query contains 990 rows while not using a join command only produces 984 rows. When you look at the last six rows in the second query with the join, you find six rows that have "null" for column originating from the countrylanguage table.
 
 ---
 
@@ -109,12 +116,14 @@ Do **not** repeat any form of government more than once.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT DISTINCT governmentform
+FROM country
+ORDER BY 1
 ```
 
 ### Screenshot
 
-![Q5 Screenshot](screenshots/q5_government_forms.png)
+![Q5 Screenshot](screenshots/E2_Q5.png)
 
 ---
 
@@ -127,12 +136,16 @@ Label the column **"City or Country Name"**.
 ### SQL
 
 ```sql
--- Your SQL here
+(SELECT Name
+FROM city)
+Union
+(SELECT Name
+FROM country)
 ```
 
 ### Screenshot
 
-![Q6 Screenshot](screenshots/q6_union_city_country.png)
+![Q6 Screenshot](E2_Q6.png)
 
 ---
 
@@ -146,12 +159,16 @@ Be sure to **sort by country name**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT country.name, COUNT(language) AS Number_Of_Languages
+FROM country
+INNER JOIN countrylanguage ON country.code = countrylanguage.countrycode
+GROUP BY country.name
+ORDER BY country.name
 ```
 
 ### Screenshot
 
-![Q7 Screenshot](screenshots/q7_language_count_by_country.png)
+![Q7 Screenshot](screenshots/E2_Q7.png)
 
 ---
 
@@ -165,12 +182,16 @@ Be sure to **sort by language name**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT countrylanguage.Language, COUNT(name) AS Number_of_Countries
+FROM country
+INNER JOIN countrylanguage ON country.code = countrylanguage.countrycode
+GROUP BY countrylanguage.Language
+ORDER BY countrylanguage.Language
 ```
 
 ### Screenshot
 
-![Q8 Screenshot](screenshots/q8_language_country_count.png)
+![Q8 Screenshot](E2_Q8.png)
 
 ---
 
@@ -185,12 +206,18 @@ _Hint: There are 8 such countries in this dataset._
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT country.name, COUNT(language) AS Total_languages_spoken
+FROM country
+JOIN countrylanguage ON country.code = countrylanguage.countrycode
+WHERE countrylanguage.IsOfficial = 'T'
+GROUP BY country.name
+HAVING COUNT(language) >2
+ORDER BY country.name
 ```
 
 ### Screenshot
 
-![Q9 Screenshot](screenshots/q9_multiple_official_languages.png)
+![Q9 Screenshot](screenshots/E2_Q9 .png)
 
 ---
 
@@ -205,7 +232,9 @@ since some rows use that instead of actual data.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT name
+FROM city
+WHERE TRIM(district) LIKE '_';
 ```
 
 ### Screenshot
@@ -224,9 +253,11 @@ _Hint: The result should be approximately 0.4%._
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT
+(SUM(CASE WHEN district = '–' OR district IS NULL THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS percentage_missing
+FROM city;
 ```
 
 ### Screenshot
 
-![Q11 Screenshot](screenshots/q11_missing_district_percentage.png)
+![Q11 Screenshot](screenshots/E2_Q11.png)
