@@ -217,7 +217,7 @@ ORDER BY country.name
 
 ### Screenshot
 
-![Q9 Screenshot](screenshots/E2_Q9 .png)
+![Q9 Screenshot](screenshots/E2_Q9.png)
 
 ---
 
