@@ -26,17 +26,17 @@ When importing the documents from `restaurants-json.json`,
 
 ### Answer
 
-_Write the number of documents imported._
+There are 25,358 documents
 
 ### Screenshot
 
 _Show evidence of how you determined this (for example, a count query)._
 
 ```javascript
-// Your MongoDB command here
+db["Resturants"].countDocuments()
 ```
 
-![Q1 Screenshot](screenshots/q1_document_count.png)
+![Q1 Screenshot](screenshots/E3_Q1.png)
 
 ---
 
@@ -49,12 +49,13 @@ Before writing queries on the data,
 ### MongoDB Command
 
 ```javascript
-// Your MongoDB command here
+use("44661");
 ```
 
 ### Screenshot
+This is the command used. However, when I right click on the 'Resturants' folder I am able to click the option 'Open MongoDB shell and it already completed the command for me.
 
-![Q2 Screenshot](screenshots/q2_use_database.png)
+![Q2 Screenshot](screenshots/E3_Q2.png)
 
 ---
 
@@ -67,12 +68,12 @@ write the MongoDB query needed to
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db["Resturants"].find({ borough: "Queens" })
 ```
 
 ### Screenshot
 
-![Q3 Screenshot](screenshots/q3_queens_restaurants.png)
+![Q3 Screenshot](screenshots/E3_Q3.png)
 
 ---
 
@@ -85,12 +86,14 @@ write the MongoDB query needed to
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db["Resturants"].countDocuments({ borough: "Queens" })
 ```
+
+Counting the number of documents that meet a request. 
 
 ### Screenshot
 
-![Q4 Screenshot](screenshots/q4_queens_count.png)
+![Q4 Screenshot](screenshots/E3_Q4.png)
 
 ---
 
@@ -104,12 +107,14 @@ write the MongoDB query needed to
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db["Resturants"].find({ borough: "Queens", cuisine: "Hamburgers" })
 ```
+
+This is a find for multiple constraints/requests.
 
 ### Screenshot
 
-![Q5 Screenshot](screenshots/q5_queens_hamburgers.png)
+![Q5 Screenshot](screenshots/E3_Q5.png)
 
 ---
 
@@ -124,12 +129,14 @@ _Hint: Look up how to query **embedded documents**._
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db.Resturants.countDocuments({ "address.zipcode": "10460" })
 ```
+
+This is for embedded documents. Address is imbedded in restaurants and we want zipcode which lies in the address document.
 
 ### Screenshot
 
-![Q6 Screenshot](screenshots/q6_zipcode_count.png)
+![Q6 Screenshot](screenshots/E3_Q6.png)
 
 ---
 
@@ -139,28 +146,20 @@ Using your `restaurants` collection in the `44661` database,
 write the MongoDB query needed to
 **display only the names of restaurants in Zipcode `10460`**.
 
-_Hint: Look up how to **project fields** in MongoDB._
-
-Your output should resemble:
-
-```json
-{ name: "Wild Asia" }
-{ name: "Terrace Cafe" }
-{ name: "African Terrace" }
-{ name: "Cool Zone" }
-{ name: "Beaver Pond" }
-...
-```
+_Hint: [Look up how to **project fields** in MongoDB.](https://www.youtube.com/watch?v=SbLZdi9X_x8)_
 
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db.Resturants.find({"address.zipcode": "10460"}, {name:1, _id:0})
 ```
+
+name:1, _id:0 means to show just the name. The id will always show up unless you tell it not to. 1 = true and 0 = false
+Must be in its own curly brackets after the set of curly brackets that tell you want you are finding.
 
 ### Screenshot
 
-![Q7 Screenshot](screenshots/q7_zipcode_names.png)
+![Q7 Screenshot](screenshots/E3_Q7.png)
 
 ---
 
@@ -171,17 +170,21 @@ write the MongoDB query needed to
 **display only the names of restaurants whose name contains `"IHOP"`**,
 ignoring case.
 
-Your results should include:
-
-- `"Ihop"`
-- `"Ihop Restaurant"`
 
 ### MongoDB Query
 
 ```javascript
-// Your MongoDB query here
+db.Resturants.find({ "name": {$regex: "IHOP", $options: 'i' }}, {name:1, _id:0})
 ```
+
+$regrex: "IHOP" means find all names (since that is on the other side of the colon) that contain IHOP.
+
+$options: 'i' = insensitive case matching
+
+Getting started using regrex https://www.youtube.com/watch?v=Uyf4WEK6pHs
+
+Directions for case sensitivity https://www.youtube.com/watch?v=fEgGGHG888w
 
 ### Screenshot
 
-![Q8 Screenshot](screenshots/q8_ihop_case_insensitive.png)
+![Q8 Screenshot](screenshots/E3_Q8.png)
