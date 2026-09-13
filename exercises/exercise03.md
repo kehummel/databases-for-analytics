@@ -1,6 +1,6 @@
 # Exercise 03: MongoDB – Document Queries and Analysis
 
-- Name:
+- Name: Kim Hummel 
 - Course: Database for Analytics
 - Module: 3
 - Database Used: MongoDB
@@ -89,7 +89,7 @@ write the MongoDB query needed to
 db["Resturants"].countDocuments({ borough: "Queens" })
 ```
 
-Counting the number of documents that meet a request. 
+Counting the number of documents that meet a request.
 
 ### Screenshot
 
