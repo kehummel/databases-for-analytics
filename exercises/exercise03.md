@@ -1,6 +1,6 @@
 # Exercise 03: MongoDB – Document Queries and Analysis
 
-- Name: Kim Hummel 
+- Name: Kim Hummel
 - Course: Database for Analytics
 - Module: 3
 - Database Used: MongoDB
@@ -107,10 +107,10 @@ write the MongoDB query needed to
 ### MongoDB Query
 
 ```javascript
-db["Resturants"].find({ borough: "Queens", cuisine: "Hamburgers" })
+db["Resturants"].countDocuments({ borough: "Queens", cuisine: "Hamburgers" })
 ```
 
-This is a find for multiple constraints/requests.
+This is a count for multiple constraints/requests.
 
 ### Screenshot
 
