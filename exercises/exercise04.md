@@ -119,3 +119,10 @@ plt.show()
 ### Screenshot
 
 ![Q3 Screenshot](screenshots/E4_Q3.png)
+
+
+## Jupyter Notebook
+
+Link to the jupyter notebook I used to answer questions 2 & 3
+
+[Jupyter Notebook for Exercise 4](./notebooks/exercise4.ipynb)
