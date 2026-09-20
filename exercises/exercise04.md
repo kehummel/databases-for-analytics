@@ -1,8 +1,8 @@
 # Exercise 04: Advanced SQL, Jupyter, and Visualization
 
-- Name:
+- Name: Kim Hummel
 - Course: Database for Analytics
-- Module:
+- Module: 4
 - Database Used: World Database
 - Tools Used: PostgreSQL, SQLAlchemy, Pandas, Jupyter Notebooks
 
@@ -34,12 +34,18 @@ along with the **number of official languages spoken**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT country.name, COUNT(language) AS Total_languages_spoken
+FROM country
+JOIN countrylanguage ON country.code = countrylanguage.countrycode
+WHERE countrylanguage.IsOfficial = 'T'
+GROUP BY country.name
+HAVING COUNT(language) >2
+ORDER BY total_languages_spoken DESC
 ```
 
 ### Screenshot
 
-![Q1 Screenshot](screenshots/q1_official_language_counts.png)
+![Q1 Screenshot](screenshots/E4_Q1.png)
 
 ---
 
@@ -55,13 +61,31 @@ execute the query from Question 1 and
 
 ### Python Code
 
+AFter I ran the 'create_engine' command, I only had two sets of code that I needed to run. The first was:
 ```python
-# Your three Python statements here
+query = """
+SELECT country.name, COUNT(language) AS total_languages_spoken
+FROM country
+JOIN countrylanguage ON country.code = countrylanguage.countrycode
+WHERE countrylanguage.IsOfficial = 'T'
+GROUP BY country.name
+HAVING COUNT(language) >2
+ORDER BY total_languages_spoken DESC
+"""
 ```
+
+And the second was:
+
+```python
+# run the query and create the new table/data set
+more_languages = pd.read_sql_query(query, engine)
+print(more_languages)
+```
+
 
 ### Screenshot
 
-![Q2 Screenshot](screenshots/q2_jupyter_query_results.png)
+![Q2 Screenshot](screenshots/E4_Q2.png)
 
 ---
 
@@ -77,9 +101,21 @@ to produce the following graph:
 ### Python Code
 
 ```python
-# Your Python code here
+# create the bar graph
+plt.figure()
+plt.bar(more_languages['name'], more_languages['total_languages_spoken'], color='royalblue', edgecolor='black')
+
+# Customize the graph
+plt.title('Names of Countries That Speak More Than Two Languages', fontsize=12, fontweight='bold')
+plt.xlabel('Country Names', fontsize=10)
+plt.ylabel('Number of Languages Spoken', fontsize=10)
+plt.xticks(rotation=90)  # Rotate labels if they overlap
+plt.tight_layout()
+
+# Display chart and close connection
+plt.show()
 ```
 
 ### Screenshot
 
-![Q3 Screenshot](screenshots/q3_countries_graph.png)
+![Q3 Screenshot](screenshots/E4_Q3.png)
