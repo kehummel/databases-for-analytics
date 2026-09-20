@@ -123,6 +123,33 @@ plt.show()
 
 ## Jupyter Notebook
 
-Link to the jupyter notebook I used to answer questions 2 & 3
+Link to the jupyter notebook I used to answer questions 2 & 3, and for the Take Ownership section following this section.
 
 [Jupyter Notebook for Exercise 4](./notebooks/exercise4.ipynb)
+
+
+## Take Ownership
+
+I found the number of cities with populations over one million per continents.
+
+
+### Python Code
+
+```python
+query2 = """
+SELECT country.continent, COUNT(city.population) AS big_cities
+FROM country
+JOIN city on country.code = city.countrycode
+WHERE city.population > 1000000
+GROUP BY country.continent
+Order by big_cities DESC
+"""
+
+# run the query and create the new table/data set
+big_cities_per_continent = pd.read_sql_query(query2, engine)
+print(big_cities_per_continent)
+```
+
+### Screenshot
+
+![Q4 Ownership](screenshots/E4_Q4.png)
