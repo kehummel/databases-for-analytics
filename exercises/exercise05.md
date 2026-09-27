@@ -1,8 +1,8 @@
 # Exercise 05: SQLDA Database - Dates, Data Quality, Arrays, and JSON
 
-- Name:
+- Name: Kim Hummel
 - Course: Database for Analytics
-- Module:
+- Module: 5
 - Database Used: `sqlda` (Sample Datasets)
 - Tools Used: PostgreSQL (pgAdmin or psql)
 
@@ -43,12 +43,15 @@ year
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT DISTINCT
+	EXTRACT(y FROM sent_date) AS year
+FROM public.emails
+ORDER BY Year ASC
 ```
 
 ### Screenshot
 
-![Q1 Screenshot](screenshots/q1_email_years.png)
+![Q1 Screenshot](screenshots/E5_Q1.png)
 
 ---
 
@@ -58,22 +61,21 @@ Using the `sqlda` database, write the SQL needed to
 show the **number of messages sent by year**,
 ordered by year (as shown in the prompt).
 
-Output should resemble:
-
-```text
-count   year
-...
-```
 
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT DISTINCT
+	EXTRACT(y FROM sent_date) AS year,
+	COUNT (1) AS messages_sent
+FROM public.emails
+Group By year
+ORDER BY year ASC
 ```
 
 ### Screenshot
 
-![Q2 Screenshot](screenshots/q2_message_count_by_year.png)
+![Q2 Screenshot](screenshots/E5_Q2.png)
 
 ---
 
@@ -90,12 +92,15 @@ Only include emails that contain **both** a sent date and an opened date.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT sent_date, opened_date, (opened_date - sent_date) AS interval
+FROM public.emails
+WHERE opened_date is NOT NULL
+	AND sent_date is NOT NULL
 ```
 
 ### Screenshot
 
-![Q3 Screenshot](screenshots/q3_sent_opened_interval.png)
+![Q3 Screenshot](screenshots/E5_Q3.png)
 
 ---
 
@@ -108,12 +113,14 @@ show emails that contain an **opened date BEFORE the sent date**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT email_id, customer_id, sent_date
+FROM public.emails
+WHERE opened_date < sent_date
 ```
 
 ### Screenshot
 
-![Q4 Screenshot](screenshots/q4_opened_before_sent.png)
+![Q4 Screenshot](screenshots/E5_Q4.png)
 
 ---
 
@@ -127,16 +134,15 @@ After looking at the data, **why is this the case?**
 
 ### Answer
 
-_Write your explanation here._
+The sent_date column looks as though that data was truncated, meaning it used the greatest rounded value for each specific date (15:00 hours in most cases), as opposed to the actual time it was sent. This means that some values are rounded up, to a later time than they were actually sent which is what is causing our data to say that emails were opened before they were sent.
 
 ### Screenshot (if requested by instructor)
 
-![Q5 Screenshot](screenshots/q5_explain_date_issue.png)
+![Q5 Screenshot](screenshots/E5_Q5.png)
 
 ---
 
 ## Question 6
-
 Using the `sqlda` database, explain in your own words what the following code does:
 
 ```sql
@@ -168,7 +174,7 @@ CREATE TEMP TABLE customer_dealership_distance AS (
 
 ### Answer
 
-_Write your explanation here._
+The first two temporary tables create location coordinates for the customers and dealerships respectively. We use the last table to find the distance from the customer to every dealership. This means that there are multiple rows with the same customer ID because we are showing the relationships between each individual customer and all 20 of the dealerships.
 
 ---
 
@@ -179,21 +185,18 @@ write SQL to display an
 **array of salespeople for each dealership**,
 sorted by dealership.
 
-For example - dealership 1 is below:
-
-```text
-"{""Fidell,Granville"",""Onele,Jereme"",""Sheriff,Lelia"",""McSpirron,Massimiliano"",""Rennick,Nadia"",""Mace,Eveleen"",""Oxteby,Dukie"",""Spong,Marcos"",""Wogden,Quent"",""Duny,Sandye"",""Loraine,Englebert"",""Meere,Ira"",""Gibbens,Cristine"",""Prine,Lyda"",""McCoughan,Sheff"",""Schule,Giselbert"",""McAndie,Eleen"",""Dosedale,Dorie"",""Nafziger,Shay""}"
-```
 
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT dealership_id, ARRAY_AGG(DISTINCT CONCAT(first_name, ',', last_name)) AS full_names
+FROM salespeople
+GROUP BY dealership_id;
 ```
 
 ### Screenshot
 
-![Q7 Screenshot](screenshots/q7_salespeople_array_by_dealership.png)
+![Q7 Screenshot](screenshots/E5_Q7.png)
 
 ---
 
@@ -204,7 +207,6 @@ Using the `sqlda` database, write SQL to display:
 - an **array of salespeople for each dealership**
 - the **state** of the dealership
 - the **number of salespeople** for the dealership
-
 Sort by **state**.
 
 Reference image:
@@ -214,12 +216,16 @@ Reference image:
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT salespeople.dealership_id, dealerships.state, COUNT(salespeople.salesperson_id), ARRAY_AGG(DISTINCT CONCAT(first_name, ',', last_name)) AS all_salespeople
+FROM salespeople
+RIGHT JOIN dealerships ON dealerships.dealership_id = salespeople.dealership_id
+GROUP BY dealerships.state, salespeople.dealership_id
+
 ```
 
 ### Screenshot
 
-![Q8 Screenshot](screenshots/q8_salespeople_array_state_count.png)
+![Q8 Screenshot](screenshots/E5_Q8.png)
 
 ---
 
@@ -231,12 +237,12 @@ the **customers** table to **JSON**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT row_to_json(c, TRUE) FROM customers c;
 ```
 
 ### Screenshot
 
-![Q9 Screenshot](screenshots/q9_customers_to_json.png)
+![Q9 Screenshot](screenshots/E5_Q9.png)
 
 ---
 
@@ -258,9 +264,15 @@ Reference image:
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT row_to_json(row_data, TRUE)
+FROM(
+	SELECT salespeople.dealership_id, dealerships.state, COUNT(salespeople.salesperson_id), ARRAY_AGG(DISTINCT CONCAT(first_name, ',', last_name)) AS all_salespeople
+	FROM salespeople
+	RIGHT JOIN dealerships ON dealerships.dealership_id = salespeople.dealership_id
+	GROUP BY dealerships.state, salespeople.dealership_id
+	) AS row_data
 ```
 
 ### Screenshot
 
-![Q10 Screenshot](screenshots/q10_salespeople_array_to_json.png)
+![Q10 Screenshot](screenshots/E5_Q10.png)
