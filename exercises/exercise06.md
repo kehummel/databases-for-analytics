@@ -2,7 +2,7 @@
 
 From the Operational Model to the Dimensional Model
 
-- Name:
+- Name: Kim Hummel
 - Course: Database for Analytics
 - Module: 6
 
@@ -111,7 +111,7 @@ Save your diagram image in this repo and embed it below.
 
 #### Diagram
 
-![Star Schema Diagram](star-schema.png)
+![Star Schema Diagram](screenshots/star-schema.png)
 
 ---
 
@@ -125,4 +125,8 @@ In 1-2 short paragraphs, explain:
 
 #### Design Notes
 
-_Write your design notes here._
+To start with, I immediately wanted to identify the grain, which we are told is daily sales. This way I would immediately how deep I needed to go. I confirmed this through the questions as they asked about days, not exact times or times of day. I then read through all of the questions we would need to be able to answer and that let me to decide which dimensions were needed. This was the background work I needed to do to understand what the task was asking and to decide how to organize all of the dimensions.
+
+Then, I got started building the data warehouse schema. I started with the facts table, which I called "customer_sales" and put in total_revenue (amount) and total_items_sold (quantity) as those were the facts we were told to store in the facts table. I knew from the questions that we would need to be able to break orders down by year, day, month, and quarter, so I added those dimensions. One of the main facts is number of items sold so I knew I would need the quantity of each part sold as well. A question asked about appliance items, so I know I needed to keep the category dimension when I was collecting information about parts. I obviously needed the monetary value of the parts as I wanted to find the total revenue. The question about the zip code meant that I needed to pull the zipcode from the customer's address.
+
+Once I created all of my dimensions and double checked that I could answer every question based on my dimensions, I connected them to my facts table by putting foreign keys into the facts table. I struggled with this because based on the directions I thought I could only have two things in my facts table, but AI told me otherwise. So I google for better sources just to double check and then added in my foreign keys. 
