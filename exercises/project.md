@@ -12,7 +12,7 @@ I was searching for larger data sets and came upon the veterans database. I was 
 
 https://www.data.va.gov/browse?sortBy=relevance&pageSize=20&limitTo=datasets&q=2023
 
-[Link to Raw Data Files: project7_raw_data](.data/project7_raw_data)
+[Link to Raw Data Files: project7_raw_data](..data/project7_raw_data)
 
 ## Formatting Data
 
@@ -41,7 +41,7 @@ The county_data_2023 in the fact table. It is a CSV file that has 7 columns and 
 
 ![county_data_2023 Select *](../data/p7_images/county_data_2023.png)
 
-Do this for the rest of the tables, and then a star chart like we did in module 6. That will take care of the data part. 
+Do this for the rest of the tables, and then a star chart like we did in module 6. That will take care of the data part.
 
 #### Outline from Canva
 
