@@ -20,7 +20,7 @@ Before I uploaded the data I reformated the column names to align with standard 
 
 When I tried to load the data from the csv files into PostgreSQL I kept getting error messages because the numerical values in the column had a comma in them, so it read it as two numbers in the same cell. In order to correct this I changed the data type from integer to text and was then able to upload the CSV. Then I used AI to help me remove the comma from the cells and then I changed the data type back into an integer.
 
-![Data Type Change](./data/p7_images/data_type.png)
+![Data Type Change](../data/p7_images/data_type.png)
 
 ## Clean Data
 
@@ -39,7 +39,7 @@ The county_data_2023 in the fact table. It is a CSV file that has 7 columns and 
 |veterans| integer| The number of veterans in that group: county, per age group per gender.|
 
 
-![county_data_2023 Select *](./data/p7_images/data_county_2023.png)
+![county_data_2023 Select *](../data/p7_images/data_county_2023.png)
 
 
 #### Outline from Canva
