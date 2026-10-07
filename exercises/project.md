@@ -39,8 +39,9 @@ The county_data_2023 in the fact table. It is a CSV file that has 7 columns and 
 |veterans| integer| The number of veterans in that group: county, per age group per gender.|
 
 
-![county_data_2023 Select *](../data/p7_images/data_county_2023.png)
+![county_data_2023 Select *](../data/p7_images/county_data_2023.png)
 
+Do this for the rest of the tables, and then a star chart like we did in module 6. That will take care of the data part. 
 
 #### Outline from Canva
 
